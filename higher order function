@@ -30,8 +30,36 @@ function fractal_5(rune, n){
                      fractal_5(stack(rune,rune),n-1));
 }
 
-show( fractal_5(heart,5));
+// Rick the Rabbit // 1,2,3 점프 가짓수 
+
+function rtr(n){
+    return n<0
+           ? 0
+           :n===0
+           ?1 
+           : rtr(n-1)    // 1 step
+            + rtr(n-2)   // 2step
+            + rtr(n-3);   // 3 step
+}
 
 
+// Coin exchange   Very hard
 
+function first_denomination(kinds_of_coins){
+    return kinds_of_coins ===1? 5 :
+           kinds_of_coins ===2? 10: 
+           kinds_of_coins ===3? 20:
+           kinds_of_coins ===4? 50:
+           kinds_of_coins ===5? 100: 0;
+}
+function cc(amount, kinds_of_coins){
+    return amount ===0
+          ? 1
+          : amount <0 || kinds_of_coins === 0 
+          ? 0
+          : cc(amount-first_denomination(kinds_of_coins),kinds_of_coins)
+            +cc(amount, kinds_of_coins-1);
+    
+}           
+cc(10, 5);
 
