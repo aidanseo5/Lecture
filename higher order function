@@ -1,4 +1,4 @@
-import {random_color, beside_frac, stack_frac, show, heart} from "rune";
+import {random_color, beside_frac, stack_frac, show, heart,beside,stack} from "rune";
 
 function fractal_1 (rune,n){
     return n===1
@@ -10,6 +10,27 @@ function fractal_1 (rune,n){
 
 
 
+// Conditional Statement 
+
+function fractal_3 ( rune,n){
+    if (n === 1){
+        return rune;
+     } else {
+            const f= fractal_3 (rune, n - 1 );  // <---- 
+            return beside (rune, stack(f, f));
+      }
+    }
+
+// Divine solution
+
+function fractal_5(rune, n){
+    return n===1
+           ? rune
+           : beside (rune, 
+                     fractal_5(stack(rune,rune),n-1));
+}
+
+show( fractal_5(heart,5));
 
 
 
