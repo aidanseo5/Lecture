@@ -1,0 +1,16 @@
+import {random_color, beside_frac, stack_frac, show, heart} from "rune";
+
+function fractal_1 (rune,n){
+    return n===1
+         ? rune
+         : beside(rune, 
+                  stack(fractal_1(rune,n-1),
+                        fractal_1(rune,n-1)));
+}
+
+
+
+
+
+
+
