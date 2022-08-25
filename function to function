@@ -1,3 +1,7 @@
 import {random_color, beside_frac, stack_frac, show, heart,beside,stack} from "rune";
 
-function sum_integers 
+function sum_integers( a, b) {
+    return a>b
+            ?-
+            : a + sum_integers(a+1,b);
+}
