@@ -1,4 +1,4 @@
-import {x_of, y_of, make_point, draw_connected, draw_connected_full_view_proportional} from "curve";
+import {rotate_around_origin, translate, x_of, y_of, make_point, draw_connected, draw_connected_full_view_proportional} from "curve";
 
 function unit_circle(t){
     return make_point(math_cos(2*math_PI*t)
@@ -8,7 +8,7 @@ function unit_line_at2(y){
     return t => make_point(t,y);
 }
 
-
+const unit_line = unit_line_at2(0);
 
 function unit_line_at(t){
     return  make_point(t,t);
@@ -25,4 +25,13 @@ function spiral_one(t){
     return make_point(t*x_of(p), t*y_of(p));
 }
 
-draw_connected(100)(unit_line_at);
+// Spiral Curve 
+
+function spiral(rev){
+    return t=> { const p = unit_circle((t*rev)%1);
+                return make_point(t*x_of(p), t* y_of(p)); };
+                
+}
+// Transformation
+const rot_line= rotate_around_origin(0,0,math_PI/6)(unit_line);
+const shifted_rot_line = translate(0,0.25,0)(rot_line);
