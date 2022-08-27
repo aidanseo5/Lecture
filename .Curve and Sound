@@ -1,0 +1,61 @@
+import {random_color, beside_frac, stack_frac, show, heart,beside,stack} from "rune";
+
+function cube(x){
+    return x*x*x;
+}
+function plus_two(x){
+    return x+2;
+}
+function sum(term, a, next, b){
+    return a>b ? 0
+               : term (a) + sum (term, next(a), next , b);  
+}
+
+function sumcubes(a,b){
+    return sum(cube, a, plus_two, b);
+}
+// Iterative 
+function fractal_4(rune, n){
+    return iter(rune ,n, rune)
+}
+function iter(rune, n, current_fractal){
+    return n===1 ? current_fractal
+                 : iter( rune, n-1 , beside(rune, stack(current_fractal,current_fractal)))
+}
+
+// Lambda expression
+
+function sum_skip_cubes(a,b){
+    return sum(x=> x*x*x, a, x=>x+2, b);
+}
+
+// Constant declaration
+
+const f = x => 2 *x ; 
+
+function make_adder(x) {
+    function adder(y){
+        return x+y;
+    } return adder; 
+}
+const adder_four = make_adder(4);
+// adder_four(6);    ==> 10 
+
+//  OTher version
+
+function make_adder(x){
+    return y=> x + y ;
+}
+make_adder(2)(5);  // <---- possible 
+
+// Scope of Name 
+
+const z = 2 ;
+function f(g) {
+    const z = 4; 
+    return g(z); 
+} 
+f( y => y +z ); 
+
+// Simple
+const factorial = n=> n ===1 ? 1 : n * factorial(n-1);
