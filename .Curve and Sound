@@ -1,11 +1,28 @@
-import {make_point, draw_connected, draw_connected_full_view_proportional} from "rune";
+import {x_of, y_of, make_point, draw_connected, draw_connected_full_view_proportional} from "curve";
 
 function unit_circle(t){
     return make_point(math_cos(2*math_PI*t)
                       , math_sin(2*math_PI*t));
 }
-function unit_line_at(y){
+function unit_line_at2(y){
     return t => make_point(t,y);
-}  
+}
+
+
+
+function unit_line_at(t){
+    return  make_point(t,t);
+}   // < ----   t 는 자동으로 [0,1] 적용하는 함수 , 
+    //point만 만들어도 functio 비슷함, 대신  (t) apply할떄 안함
+
 //draw_connected_full_view_proportional(8)(unit_circle)
 //  --->  8각형 
+
+
+//Spiral 
+function spiral_one(t){
+    const p = unit_circle(t);
+    return make_point(t*x_of(p), t*y_of(p));
+}
+
+draw_connected(100)(unit_line_at);
