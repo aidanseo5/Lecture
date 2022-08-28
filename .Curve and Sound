@@ -64,6 +64,11 @@ function colorful_3D_spiral(rev){
           // make_color_point(x, y, R,G,B)
     };
 }
+// Sound 
+const doremi_wave = t => t < 0.5
+                        ? math_sin(2*math_PI*261.63*t)
+                        : t <1/0 
+                        // .. 등등
 
 
 
