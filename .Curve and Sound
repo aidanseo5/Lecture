@@ -68,7 +68,7 @@ function colorful_3D_spiral(rev){
 const doremi_wave = t => t < 0.5
                         ? math_sin(2*math_PI*261.63*t)
                         : t <1/0 
-                        // .. 등등
+         }               // .. 등등
 
 
 
