@@ -1,9 +1,25 @@
-function make_point(x,y){
+function pair(x,y){
     return component => component === 0 ? x : y ;
 }
-function x_of(p){
-    return p(0);
+function head(p){    // p : pair function
+    return p(0); 
 }
-function y_of(p){
+function tail(p){
     return p(1);
+}
+// Abstraction 
+
+const pair = (x,y) => f => f(x,y);
+const head = p => p ((x,y)=> x) ;
+const tail = p => p ((x,y) => y); 
+
+// Case : rational number 
+function make_rat(n,d){
+    return pair(n,d)
+}
+function numer(x){
+    return head(x);
+}
+function denom(x){
+    retunr tail(x);
 }
