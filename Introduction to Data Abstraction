@@ -1,2 +1,9 @@
-
-
+function make_point(x,y){
+    return component => component === 0 ? x : y ;
+}
+function x_of(p){
+    return p(0);
+}
+function y_of(p){
+    return p(1);
+}
