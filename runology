@@ -1,0 +1,13 @@
+import {quarter_turn_right,red, sail, show, heart, rcross, stack, stackn, stack_frac, quarter_turn_left, beside_frac} from "rune";
+
+function beside(rune1, rune2){
+    return quarter_turn_left(stack(quarter_turn_right(rune1),
+                                  quarter_turn_right(rune2)));
+}
+
+
+
+const my_qult = 
+    stackn(2, quarter_turn_right(
+                 stackn(5, quarter_turn_left(red(heart)))));
+show(my_qult);
