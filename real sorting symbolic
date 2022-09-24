@@ -1,4 +1,83 @@
 
+const lst = list(2,3,1,4);
+
+function insertion_sort(xs) {
+return is_null(xs) 
+? xs
+: insert(head(xs), insertion_sort(tail(xs)));
+}
+
+function insert(x, xs) {
+return is_null(xs) 
+? list(x)
+: x <= head(xs) 
+? pair(x, xs)
+: pair(head(xs), insert(x, tail(xs)));
+}
+
+insertion_sort(lst);
+
+function smallest(xs) {
+return accumulate((x, y) => x < y ? x : y, 
+head(xs), tail(xs));
+}
+
+function selection_sort(xs) {
+if (is_null(xs)) {
+return xs;
+} else {
+const x = smallest(xs);
+return pair(x, selection_sort(remove(x, xs)));
+}
+}
+
+function merge_sort(xs) {
+if (is_null(xs) || is_null(tail(xs))) {
+return xs;
+} else {
+const mid = middle(length(xs));
+return merge(merge_sort(take(xs, mid)),
+merge_sort(drop(xs, mid)));
+}
+}
+
+function merge(xs, ys) {
+if (is_null(xs)) {
+return ys;
+} else if (is_null(ys)) {
+return xs;
+} else {
+const x = head(xs);
+const y = head(ys);
+return x < y 
+? pair(x, merge(tail(xs), ys))
+: pair(y, merge(xs, tail(ys)));
+}
+}
+
+function middle(n) {
+return math_floor(n / 2);
+}
+// put the first n elements of xs into a list
+function take(xs, n) {
+// ???
+}
+// drop the first n elements from the list
+// and return the rest
+function drop(xs, n) {
+// ???
+}
+
+
+
+
+
+
+
+
+
+
+
 
 function append2(xs, ys){
     return is_null(xs)
@@ -12,12 +91,7 @@ function reverse2(lst) {
             ? null
             : append(reverse2(tail(lst)),list(head(lst)));
 }
- 이해 안됨 // run time : theta (n ^2 )
+ //이해 안됨 // run time : theta (n ^2 )
  
- function reverse3()
+
  
- function scale_list(xs,k){
-     return is_null(xs)
-            : is_null
-            : 
- }
