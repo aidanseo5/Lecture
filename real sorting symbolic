@@ -69,29 +69,55 @@ function drop(xs, n) {
 }
 
 
+// reflection  
 
+const xs = list(6, 3, 8, 5, 1, 9, 6, 4, 2, 7);
 
-
-
-
-
-
-
-
-
-function append2(xs, ys){
-    return is_null(xs)
-           ? ys
-           : pair(head(xs) , append2(tail(xs),ys));
+function insert_cmp(x, xs, cmp) {
+ return is_null(xs)
+    ? list(x)
+    : cmp(x, head(xs))
+    ? pair(x, xs)
+    : pair(head(xs), insert_cmp(x, tail(xs), cmp));
 }
-// Order of growth in time, space : theta (N)
-
-function reverse2(lst) {
-    return is_null(lst)
-            ? null
-            : append(reverse2(tail(lst)),list(head(lst)));
+function insertion_sort_cmp(xs, cmp) {
+ return is_null(xs)
+   ? xs
+   : insert_cmp(head(xs), insertion_sort_cmp(tail(xs), cmp),cmp);
 }
- //이해 안됨 // run time : theta (n ^2 )
- 
+
+ const cmp = (x,y) =>false ;  // reverse
+
+function cmp(x,y){
+    if( x%2 === y%2){
+        if (x%2 ===0){
+            return x<=y ? true : false ;
+        }
+        else {
+            return y<=x ? true : false ; 
+        }
+    }
+    else {
+        if (x%2 === 0){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+
+insertion_sort_cmp(xs,cmp );
+
+
+
+
+
+
+
+
+
+
 
  
