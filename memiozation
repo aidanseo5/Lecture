@@ -1,80 +1,54 @@
-function stream_tail(stream){
-    return tail(stream)();
-}
+// memioze fibonacci
 
-function enum_stream(low, hi){
-    return low > hi
-        ? is_null
-        : pair(low, () => enum_stream(low+1,hi));
-}
 
-function steam_ref(s,n){
-    return n=== 0 
-        ? head(s) 
-        : stream_ref(stream_tail(s),n-1);
-}
+function mfib(n) {
 
-function stream_map(f,s){
-    return is_null(s)
-        ? null 
-        : pair(f(head(s)), () => stream_map(f, stream_tail(s)));
-}
+    const mem = [];
+    function fib(k) {
 
-function stream_filter(p,s){
-    return is_null(s)
-        ? null 
-        : p(head(s))
-            ? pair(head(s),()=> stream_filter(p, stream_tail(s)))
-            : stream_filter(p,stream_tail(s));
-}
-// prime 
-function is_prime(n){
-    if (n<2){
-        return false;
-    } else if (n===2) {
-        return true;
-    } else {
-        let prime = true ;
-        for (let d=2 ; d*d <= n && prime ; d= d+1){
-            if (n%d===0){
-            prime = false ;
-        } else {}
+    if (mem[k] !== undefined) {
+        return mem[k]; 
+    } else { 
+    const result =k <= 1 ? k : fib(k - 1) + fib(k - 2);
+    mem[k] = result;
+    return result;
     }
-     return prime;
+}
+return fib(n);
+}
+// Abstract
+function memoize(f) {
+const mem = [];
+function mf(x) {
+if (mem[x] !== undefined) {
+return mem[x];
+} else {
+const result = f(x);
+mem[x] = result;
+return result;
 }
 }
+return mf;
+} 
+// tribonaci 
+const mtrib =
+memoize(n => n === 0 ? 0
+: n === 1 ? 1
+: n === 2 ? 1
+: mtrib(n - 1) +
+mtrib(n - 2) +
+mtrib(n - 3));
 
-// find huge prime number 
-head(stream_tail(stream_filter(is_prime,enum_stream(10000,100000))));
-
-function integers_from(n){
-    return pair(n, ()=> integers_from(n+1));
+// 2D 
+const mem = [];
+function read(n, k) {
+return mem[n] === undefined
+? undefined
+: mem[n][k];
 }
-const integers = integers_from(1);
-// no four 
-const no_four = stream_filter(x=>!(x%4===0), integers);
-
-no_four;
-
-// eval_stream creates list of the elements
-
-eval_stream(no_four,10);
-
-// fibonachi 
-function fibgen(a,b){
-    return pair(a, ()=> fibgen(b, a+b));
+function write(n, k, value) {
+if (mem[n] === undefined) {
+mem[n] = [];
 }
-//  1 1 2 1 2 3 1 2 3 4 - - - 
-function more(a,b){
-    return a>b
-        ? more(1, 1+b)
-        : pair(a, () => more(a+1,b));
-}
-const moreandmore =more(1,1);
-
-
-
-
-
-
+mem[n][k] = value;
 
