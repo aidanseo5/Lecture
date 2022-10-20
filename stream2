@@ -1,7 +1,113 @@
-const a = list (1,2,3);
-const b= list (3,4,5);
+// infinite stream
 
-set_tail(a,10);
-const c= pair(tail(a),b);
-c;
+function one_stream(){
+    return pair(1, one_stream);
+}
+function stream_tail(stream){
+    return tail(stream)();
+}
+function stream_ref(s,n){
+    return n===0
+        ? head(s)
+        : stream_ref(stream_tail(s),n-1);
+}
+
+function stream_map(f,s){
+    return is_null(s)
+        ? null 
+        : pair(f(head(s)), ()=> stream_map(f,stream_tail(s)));
+}
+function stream_filter(p,s){
+    return is_null(s)
+        ? null 
+        : p(head(s))
+            ?pair(head(s),()=> stream_filter(p,stream_filter(s)));
+            : stream_filter(p, stream_filter(s));
+}
+// replace certain value with other value 
+
+function replace(s,a,b){
+    return is_null(s)
+        ? null 
+        : pair((head===a)? b : head(s),
+          ()=> replace(stream_tail(s),a,b));
+}
+// infinite loop list to stream 
+function list_to_inf_stream(xs){
+    function helper(ys){
+        if (is_null(ys)){
+            return helper(xs);
+        }else {
+            return pair(head(ys), ()=> helper(tail(ys)));
+        }
+    }
+    return is_null(xs) ? null : helper(xs);
+}
+
+// alternative version 
+const ones = pair(1, () => ones);
+
+// adding streams 
+function add_streams(s1,s2){
+    if (is_null(s1)){
+        return s2;
+    } else if (is_null(s2)){
+        return s1;
+    }else {
+        return pair(head(s1)+head(s2),
+                ()=> add_streams(stream_tail(s1),stream_tail(s2)));
+    }
+}
+// version2  fibonacci 
+const fibs = pair(0,
+                  ()=>pair(1,  
+                            ()=> add_streams(stream_tail(fibs),fibs)));
+// integers 
+const integers = pair(1, ()=> add_streams(ones, integers));
+
+//  memoization
+function memo_fun(fun){
+    let already_run= false;
+    let result = undefined;
+    
+    function mfun(){
+        if (!already_run){
+            result = fun();
+            already_run = true; 
+            return result ;
+        } else{
+            return result;
+        }
+    }
+    return mfun;
+}
+
+const onesB = pair(1, memo_fun(()=>ms("B",onesB))); // evalute once --> print B 1 time 
+
+// Genrating prime 
+const primes = pair(2, ()=> stream_filter(is_prime, integers_from(3)));
+
+// Eratosthenes , prime 
+function is_divisible(x,y){
+    return x%y===0;
+}
+function sieve(s){
+    return pair(head(s), 
+           () => sieve(stream_filter(
+               x=> !is_divisible(x,head)),stream_tail(s))));
+}
+const primes = sieve(integers_from(2));
+
+
+
+
+
+
+
+
+
+
+
+
+
 
